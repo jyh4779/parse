@@ -12,3 +12,4 @@ typedef struct{
 int parse(char *szBODY, int len, st_PARSE *p);
 char *strtok_s(char *text, char *point);
 int getParam(st_PARSE *p, char *key, char **data);
+int getParamList(st_PARSE *p, char *key, int listcnt, char **data);

@@ -82,12 +82,12 @@ int getParamListElement(st_PARSE *p, char *key, int idx, char **data)
 	return strlen(*data);
 }
 
-int getParamList(st_PARSE *p, char *key, int listcnt, char *data)
+int getParamList(st_PARSE *p, char *key, int listcnt, char **data)
 {
 	int i;
 	i=0;
 	
-	if(!(listcnt)) return 0;
+	if(listcnt < 0) return -1;
 
 	while(1)
 	{
@@ -97,7 +97,7 @@ int getParamList(st_PARSE *p, char *key, int listcnt, char *data)
 				if(p[i].body[listcnt]) *data = p[i].body[listcnt];
 				else{
 					printf("not exist data\n");
-					return -1;
+					return -2;
 				}
 				break;
 			}
@@ -105,8 +105,8 @@ int getParamList(st_PARSE *p, char *key, int listcnt, char *data)
 		} else{
 			printf("input key name is %s\n", key);
 			printf("but found failed\n");
-			return -2;
+			return -3;
 		}
 	}
-	return 
+	return strlen(*data);
 }
