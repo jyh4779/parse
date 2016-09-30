@@ -1,23 +1,17 @@
-SHELL = /bin/sh
-CC = `which gcc`
-LIB = libparse.a
-TARGET = parse
-AR = ar rc
-LIBDIR = ./LIB/
-MD = mkdir
-SRC = parse_main.c parse.c
-OBJS = $(SRC:.c=.o)
-LIBS = -lparse
-.SUFFIXES : .c .o
+SHELL =/bin/sh
 
-ALL : $(TARGET)
+MAKE =`which make`
 
-$(TARGET) : $(LIB)
-			  $(CC) -o $@ $(SRC) -L$(LIBDIR) $(LIBS)
+DIR =LIBSRC SRC
 
-$(LIB) : $(OBJS)
-		   $(MD) $(LIBDIR)
-		   $(AR) $(LIBDIR)$@ $^
+all: APP
 
-clean : 
-		rm -fr $(OBJS) $(LIBDIR) $(TARGET)
+APP: ${patsubst %,__ALL__%,${DIR}}
+
+${patsubst %,__ALL__%,${DIR}}:
+	${MAKE} -C ${patsubst __ALL__%,%,$@}
+
+clean: ${patsubst %,__CLEAN__%, ${DIR}}
+
+${patsubst %,__CLEAN__%, ${DIR}}:
+	${MAKE} -C ${patsubst __CLEAN__%,%,$@} clean
